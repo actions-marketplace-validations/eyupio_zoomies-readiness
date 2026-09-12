@@ -1,0 +1,49 @@
+name: Zoomies Readiness Check
+description: Analyse GitHub Actions workflows and show how ready they are to move to a Zoomies runner fleet.
+author: EyUp.io
+
+branding:
+  icon: zap
+  color: blue
+
+inputs:
+  workflow-path:
+    description: Directory containing the workflow YAML files to analyse.
+    required: false
+    default: .github/workflows
+  linux-x64-pool:
+    description: Zoomies pool label to recommend for Linux x64 jobs.
+    required: false
+    default: zoomies-linux-x64
+  linux-arm64-pool:
+    description: Zoomies pool label to recommend for Linux arm64 jobs.
+    required: false
+    default: zoomies-linux-arm64
+  report-directory:
+    description: Workspace-relative directory for the Markdown and JSON reports.
+    required: false
+    default: zoomies-readiness
+  fail-on:
+    description: "Failure threshold: never, unsupported, or manual-review."
+    required: false
+    default: never
+
+outputs:
+  score:
+    description: Percentage of jobs ready, reusable, or already on Zoomies.
+  total-jobs:
+    description: Number of jobs with a runs-on target.
+  ready-jobs:
+    description: Number of jobs ready to migrate to a suggested Zoomies pool.
+  manual-review-jobs:
+    description: Number of jobs needing human review.
+  unsupported-jobs:
+    description: Number of jobs using a platform without a first-party Zoomies runner image.
+  report-json:
+    description: Path to the machine-readable JSON report.
+  report-markdown:
+    description: Path to the human-readable Markdown report.
+
+runs:
+  using: node24
+  main: dist/index.js
