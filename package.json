@@ -1,0 +1,27 @@
+{
+  "name": "zoomies-readiness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Action that assesses workflow readiness for Zoomies self-hosted runners",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.js -o dist --minify",
+    "format": "prettier --write action.yml package.json src test .github README.md CONTRIBUTING.md SECURITY.md",
+    "format:check": "prettier --check action.yml package.json src test .github README.md CONTRIBUTING.md SECURITY.md",
+    "test": "node --test",
+    "check": "npm run format:check && npm test && npm run build"
+  },
+  "dependencies": {
+    "@actions/core": "3.0.1",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "0.45.0",
+    "prettier": "3.6.2"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

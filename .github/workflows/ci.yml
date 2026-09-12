@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Distribution is committed
+        run: git diff --exit-code -- dist
+
+  action:
+    name: Action smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: readiness
+        uses: ./
+      - name: Validate outputs
+        env:
+          SCORE: ${{ steps.readiness.outputs.score }}
+          REPORT: ${{ steps.readiness.outputs.report-json }}
+        run: |
+          test "$SCORE" -ge 1
+          test -s "$REPORT"
