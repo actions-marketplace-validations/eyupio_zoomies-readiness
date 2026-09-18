@@ -1,5 +1,7 @@
 # Zoomies Readiness Check
 
+[![CI has the Zoomies](https://zoomies.sh/badge.svg)](https://zoomies.sh)
+
 Know what can move before changing a single workflow.
 
 Zoomies Readiness Check analyses every job in `.github/workflows`, explains how
