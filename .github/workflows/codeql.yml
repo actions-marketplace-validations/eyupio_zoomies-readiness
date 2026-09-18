@@ -13,7 +13,7 @@ permissions:
 jobs:
   analyse:
     name: JavaScript and TypeScript
-    runs-on: ubuntu-latest
+    runs-on: zoomies-linux-x64
     permissions:
       security-events: write
       packages: read
